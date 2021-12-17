@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int N;
+  cin >> N;
+  vector<int> A(N);
+  for(int i = 0; i < N; i ++){
+    cin >> A.at(i);
+  }
+
+  //mapで値と出現回数の関係を管理する
+  map<int, int>cnt;
+  for(int x : A){
+    if (cnt.count(x)){
+      //既に含まれている場合、インクリメントする
+      cnt.at(x)++;
+    }
+    else{
+      cnt[x] = 1;
+    }
+  }
+
+  int max_cnt = 0;
+  int ans = -1;
+  for (int x :A){
+    //もう一度全部数字見て、現時点より出現回数が大きければ更新する
+    if(max_cnt < cnt.at(x)){
+      max_cnt = cnt.at(x);
+      ans = x;
+    }
+  }
+  cout << ans << " " << max_cnt << endl; 
+}
