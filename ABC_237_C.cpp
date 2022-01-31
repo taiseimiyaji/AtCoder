@@ -1,38 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
-//上位の人の回答を理解するために適宜コメントを追加
+
 
 void Main(){
-  const int N = (int)2e6 + 7;
-  char s[N];
-  int n; //文字列の長さ
-
-  scanf("%s", s);
-  n = strlen(s);
-  int p = 0;
-  while(p < n && s[p] == 'a') p++; //頭からaが続く限りループ
-  if(p == n){
-    printf("Yes\n");
-    return;
+  //Atcoder公式解説
+  //ロジックは以下
+  //l < rの時ループ
+  //1.両端がaならl,rを進める
+  //2.右がaならrを進める
+  //3.両端が同じならl,rを進める
+  //ループ結果として
+  //l >= rならYes,それ以外はNo
+  //ポイント:頭に任意の数aを加えて回文判定する = 後から任意の数aを除いて回文判定する
+  //但し、右のaは消せるけど左のaは消せないことに注意する
+  string s;
+  cin >> s;
+  int n = s.size();
+  int l = 0, r = n - 1; //カーソルの準備
+  while(l < r && s[l] == 'a' && s[r] == 'a'){
+    ++l;--r;
   }
-  int q = n;
-  while(s[q - 1] == 'a')q--;//後からaが続く限りループ
-  if(p > n - q) {
-    printf("No\n");
-    return;
+  while(l < r && s[r] == 'a') --r;
+  while(l < r && s[l] == s[r]){
+    ++l; --r;
   }
-  q--;
-  while(p < q){ //同時にp++,q--して文字が異なっていればNoそうでなければYess
-    if(s[p] != s[q]){
-      printf("No\n");
-      return;
-    }
-    p++;
-    q--;
-  }
-  printf("Yes\n");
-  return;
-
+  if(l >= r)cout << "Yes" << endl;
+  else cout << "No" << endl;
 }
 int main(){
   Main();
